@@ -6,7 +6,7 @@ config :chat_app, ChatApp.Repo,
   password: "secret",
   hostname: "localhost",
   database: "chat_app",
-  port: "5432",
+  port: "5433",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

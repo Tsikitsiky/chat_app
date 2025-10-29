@@ -1,6 +1,10 @@
 defmodule ChatAppWeb.Router do
   use ChatAppWeb, :router
 
+  alias Users.UsersLive
+  alias Chats.ChatsListLive
+  alias Chats.ChatLive
+
   import ChatAppWeb.UserAuth
 
   pipeline :browser do
@@ -68,6 +72,26 @@ defmodule ChatAppWeb.Router do
       on_mount: [{ChatAppWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+    end
+  end
+
+  scope "/users", ChatAppWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :users,
+      on_mount: [{ChatAppWeb.UserAuth, :ensure_authenticated}] do
+      live "/", UsersLive, :index
+    end
+  end
+
+  scope "/chats", ChatAppWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :chats,
+      on_mount: [{ChatAppWeb.UserAuth, :ensure_authenticated}] do
+      live "/", ChatsListLive, :index
+      live "/:chat_id", ChatLive, :index
+      live "/new/:user_id", ChatLive, :new
     end
   end
 

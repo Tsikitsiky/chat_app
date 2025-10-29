@@ -76,4 +76,24 @@ defmodule ChatApp.Users.UserNotifier do
     ==============================
     """)
   end
+
+  @doc """
+  Deliver user invite.
+  """
+  def deliver_user_invite(email, url) do
+    deliver(email, "Chat app invitation", """
+
+    ==============================
+
+    Hi,
+
+    You have been invited to use the Chat app.
+
+    You can click the link bellow to accept the invitation:
+
+    #{url}
+
+    ==============================
+    """)
+  end
 end

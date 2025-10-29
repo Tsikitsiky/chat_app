@@ -1,0 +1,18 @@
+<div class="bg-frost w-[calc(screen - 10px)] px-6 py-8">
+  <header class="mb-6 flex items-center justify-between">
+    <h2>Users list</h2>
+    <.button class="btn-primary" phx-click="open_invite_modal">Invite a user</.button>
+  </header>
+  <ul class="mx-auto max-w-2xl shadow-md">
+    <li :for={user <- @users} class="p-5 border" phx-click="open_a_discussion" phx-value-user_id={user.id}>{user.email}</li>
+  </ul>
+
+  <.modal id="invite_user_modal" show :if={@live_action == :invite} on_cancel={JS.patch(~p"/users")}>
+    <.live_component
+      module={ChatAppWeb.Users.UserInvite}
+      id="users-invite-component"
+      current_user={@current_user}
+      return_to={~p"/users"}
+    />
+  </.modal>
+</div>

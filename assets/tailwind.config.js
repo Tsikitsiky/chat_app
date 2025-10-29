@@ -15,6 +15,23 @@ module.exports = {
     extend: {
       colors: {
         brand: "#FD4F00",
+
+        // Cool Slate Theme
+        frost: "#E8EDF2",
+        periwinkle: "#D4DCE8",
+        lavender: "#B9C6DB",
+        blush_gray: "#E8DAD4",
+        slate_blue: "#334155",
+        teal: "#5A8B94",
+        ice_blue: "#DEE5EB",
+
+        // Lavender Gray Theme
+        lavender_mist: "#E8E6F0",
+        soft_lavender: "#D8D4E8",
+        warm_cream: "#E8E4D4",
+        purple_gray: "#4A4458",
+        dusty_purple: "#9B8FB5",
+        light_lavender: "#DEDCE8"
       }
     },
   },

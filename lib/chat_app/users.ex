@@ -60,6 +60,11 @@ defmodule ChatApp.Users do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def list_users do
+    User
+    |> Repo.all()
+  end
+
   ## User registration
 
   @doc """
