@@ -163,4 +163,24 @@ defmodule ChatApp.Users.User do
       add_error(changeset, :current_password, "is not valid")
     end
   end
+
+  def initials(%{first_name: first_name, last_name: last_name}) do
+    (first_letter(first_name) <> first_letter(last_name)) |> String.upcase()
+  end
+
+  def initials(_) do
+    "?"
+  end
+
+  defp first_letter(s) when is_binary(s), do: String.first(s)
+  defp first_letter(_s), do: ""
+
+  def full_name(%{first_name: first_name, last_name: last_name})
+      when not is_nil(first_name) and not is_nil(last_name) do
+    "#{first_name} #{last_name}"
+  end
+
+  def full_name(%{email: email}), do: email
+
+  def full_name(_), do: "Unidentified User"
 end

@@ -30,7 +30,7 @@ defmodule ChatAppWeb.Users.UsersLive do
   def handle_event("open_a_discussion", %{"user_id" => user_id}, socket) do
     dbg(user_id)
     socket
-    |> push_navigate(to: ~p"/chats/#{user_id}")
+    |> push_navigate(to: ~p"/chats/new/#{user_id}")
     |> noreply()
   end
 end
