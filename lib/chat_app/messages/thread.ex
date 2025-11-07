@@ -19,8 +19,8 @@ defmodule ChatApp.Messages.Thread do
 
   def changeset(thread, attrs) do
     thread
-    |> cast(attrs, [:subject, :department_id, :department_document_data_id, :metadata])
-    |> validate_required([:subject, :department_id, :department_document_data_id])
+    |> cast(attrs, [:subject, :creator_id])
+    |> validate_required([:subject, :creator_id])
   end
 
   def from() do
@@ -29,5 +29,20 @@ defmodule ChatApp.Messages.Thread do
 
   def get(id) do
     from(t in __MODULE__, as: :thread, where: t.id == ^id)
+  end
+
+  def create_thread(changeset) do
+    changeset
+    |> ChatApp.Repo.insert()
+  end
+
+  def list_threads_for_user(user_id) do
+    from(t in __MODULE__,
+      join: p in ChatApp.Messages.ThreadParticipation,
+      on: p.thread_id == t.id,
+      where: p.participant_id == ^user_id,
+      select: t
+    )
+    |> ChatApp.Repo.all()
   end
 end

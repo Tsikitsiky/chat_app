@@ -3,9 +3,11 @@ defmodule ChatAppWeb.Chats.ChatsListLive do
 
   @impl true
   def mount(_params, _session, socket) do
+
     socket
     |> assign(:page_title, "Chats")
     |> assign(:active_nav_item, :chats)
+    |> assign(:chat_list, [])
     |> ok()
   end
 

@@ -27,4 +27,9 @@ defmodule ChatApp.Messages.ThreadReply do
   def get(id) do
     from(m in __MODULE__, as: :thread_reply, where: m.id == ^id)
   end
+
+  def create_thread_reply(changeset) do
+    changeset
+    |> ChatApp.Repo.insert()
+  end
 end

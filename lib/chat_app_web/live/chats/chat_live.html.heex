@@ -1,8 +1,8 @@
 <div class="flex flex-col justify-between h-[calc(100vh-32px)]">
   <header>
-    <h2>Chat with {@chat_id}</h2>
+    <h2>Chat with {@thread_id}</h2>
   </header>
   <section class="">
-    <.live_component module={ChatAppWeb.Chats.MessageForm} id="message-form-component" current_user={@current_user} />
+    <.live_component module={ChatAppWeb.Chats.MessageForm} id="message-form-component" current_user={@current_user} thread_id={@thread_id} />
   </section>
 </div>

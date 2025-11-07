@@ -11,21 +11,22 @@ defmodule ChatAppWeb.Chats.ChatLive do
     |> ok()
   end
 
-  def mount(%{"chat_id" => chat_id}, session, socket) do
-    dbg(chat_id)
+  def mount(%{"chat_id" => thread_id}, session, socket) do
+    dbg(thread_id)
 
     socket
     |> assign(:active_nav_item, :chats)
+    |> assign(:thread_id, thread_id)
     |> assign(:current_user, session["current_user"])
     |> ok()
   end
 
   @impl true
   def handle_params(params, _uri, socket) do
-    chat_id = Map.get(params, "chat_id")
+    thread_id = Map.get(params, "chat_id")
 
     socket
-    |> assign(:chat_id, chat_id)
+    |> assign(:thread_id, thread_id)
     |> noreply()
   end
 end

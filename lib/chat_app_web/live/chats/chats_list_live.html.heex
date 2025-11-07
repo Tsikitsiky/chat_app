@@ -2,4 +2,16 @@
   <header>
     <h2>Chats</h2>
   </header>
+
+  <div>
+  <ul>
+    <%= for chat <- @chat_list do %>
+      <li>
+        <.link href={~p"/chats/#{chat.id}"}>
+          {chat.subject}
+        </.link>
+      </li>
+    <% end %>
+  </ul>
+  </div>
 </div>
