@@ -1,5 +1,13 @@
 # ChatApp
 
+To be able to run this project locally you need to install dependencies using asdf and mix
+
+``` bash
+   asdf plugin add erlang
+   asdf plugin add elixir
+   asdf plugin add nodejs
+   asdf install
+```
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
