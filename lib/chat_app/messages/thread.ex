@@ -41,6 +41,8 @@ defmodule ChatApp.Messages.Thread do
       join: p in ChatApp.Messages.ThreadParticipation,
       on: p.thread_id == t.id,
       where: p.participant_id == ^user_id,
+      order_by: [desc: t.inserted_at],
+      distinct: t.id,
       select: t
     )
     |> ChatApp.Repo.all()

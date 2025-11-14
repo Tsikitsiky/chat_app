@@ -6,7 +6,7 @@ defmodule ChatApp.Messages.ThreadParticipation do
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
 
-  schema "thread_participation" do
+  schema "thread_participations" do
     belongs_to :thread, ChatApp.Messages.Thread, type: :binary_id
     belongs_to :participant, ChatApp.Users.User, type: :binary_id
     belongs_to :last_read_reply, ChatApp.Messages.ThreadReply, type: :binary_id

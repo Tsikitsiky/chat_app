@@ -673,4 +673,13 @@ defmodule ChatAppWeb.CoreComponents do
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
+
+  attr :user, :map, required: true
+  def initials_rounder(assigns) do
+    ~H"""
+    <div class="p-3 flex items-center justify-center rounded-full bg-teal h-fit text-white font-semibold">
+      {ChatApp.Users.User.initials(@user)}
+    </div>
+    """
+  end
 end

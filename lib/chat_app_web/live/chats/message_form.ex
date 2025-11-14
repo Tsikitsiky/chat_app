@@ -1,13 +1,13 @@
 defmodule ChatAppWeb.Chats.MessageForm do
-  alias ChatApp.Messages.ChatManagement
   use ChatAppWeb, :live_component
 
-  alias ChatApp.Users.User
   alias ChatApp.Messages.ThreadReply
+  alias ChatApp.Messages.ChatManagement
+
+  import ChatAppWeb.CoreComponents
 
   @impl true
   def update(assigns, socket) do
-    # assigns |> dbg()
     socket
     |> assign(assigns)
     |> assign(:message_form, ThreadReply.changeset(%ThreadReply{}, %{}))
@@ -34,9 +34,9 @@ defmodule ChatAppWeb.Chats.MessageForm do
     case ChatManagement.create_thread_with_initial_message(
            content,
            socket.assigns.current_user.id,
-           socket.assigns.current_user.id
+           socket.assigns.participant_ids
          ) do
-      {:ok, _thread, _thread_participation, _thread_reply} ->
+      {:ok, _thread, _thread_reply, _thread_participation} ->
         socket
         |> assign(:message_form, ThreadReply.changeset(%ThreadReply{}, %{}))
         |> noreply()
@@ -54,8 +54,6 @@ defmodule ChatAppWeb.Chats.MessageForm do
         %{"thread_reply" => %{"content" => content}},
         %{assigns: %{thread_id: thread_id}} = socket
       ) do
-    dbg(thread_id)
-
     changeset =
       ThreadReply.changeset(%ThreadReply{}, %{
         "content" => content,
@@ -63,9 +61,7 @@ defmodule ChatAppWeb.Chats.MessageForm do
         "author_id" => socket.assigns.current_user.id
       })
 
-    dbg(changeset)
-
-    case ThreadReply.create_thread_reply(changeset) do
+    case ChatManagement.add_reply_to_thread(changeset) do
       {:ok, _thread_reply} ->
         socket = assign(socket, :message_form, ThreadReply.changeset(%ThreadReply{}, %{}))
         {:noreply, socket}
@@ -85,9 +81,7 @@ defmodule ChatAppWeb.Chats.MessageForm do
     <div>
       <.form :let={f} for={@message_form} phx-change="validate" phx-submit="send" phx-target={@myself}>
         <div class="w-full flex justify-between items-center gap-5 px-6">
-          <div class="w-12 h-12 flex items-center justify-center rounded-full bg-teal h-fit text-white font-semibold">
-            {User.initials(@current_user)}
-          </div>
+        <.initials_rounder user={@current_user} />
           <div class="w-full">
             <.input
               type="textarea"
